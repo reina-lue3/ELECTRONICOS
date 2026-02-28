@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Nuevo Proveedor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #5a7dc9 0%, #6b8fd9 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4a8f5e 0%, #5a9f6e 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 143, 94, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Registrar Nuevo Proveedor</div>
+
+        <div class="alert alert-success" id="alertSuccess">
+            ¡Proveedor registrado exitosamente!
+        </div>
+        <div class="alert alert-error" id="alertError">
+            Por favor completa todos los campos requeridos.
+        </div>
+
+        <form id="proveedorForm">
+            <!-- Nombre del Proveedor -->
+            <div class="form-group">
+                <label for="nombre">Nombre del Proveedor</label>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    name="nombre" 
+                    placeholder="Ej: TechSupplies S.A." 
+                    required
+                >
+            </div>
+
+            <!-- Contacto Principal -->
+            <div class="form-group">
+                <label for="contacto">Contacto Principal</label>
+                <input 
+                    type="text" 
+                    id="contacto" 
+                    name="contacto" 
+                    placeholder="Ej: Juan Pérez" 
+                    required
+                >
+            </div>
+
+            <!-- Teléfono y Email en una fila -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input 
+                        type="tel" 
+                        id="telefono" 
+                        name="telefono" 
+                        placeholder="Ej: +34 912 345 678" 
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Ej: contacto@proveedor.com" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Dirección -->
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input 
+                    type="text" 
+                    id="direccion" 
+                    name="direccion" 
+                    placeholder="Ej: Calle Principal 123, Madrid" 
+                    required
+                >
+            </div>
+
+            <!-- Ciudad y País en una fila -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ciudad">Ciudad</label>
+                    <input 
+                        type="text" 
+                        id="ciudad" 
+                        name="ciudad" 
+                        placeholder="Ej: Madrid" 
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="pais">País</label>
+                    <select id="pais" name="pais" required>
+                        <option value="">Selecciona un país</option>
+                        <option value="es">España</option>
+                        <option value="mx">México</option>
+                        <option value="ar">Argentina</option>
+                        <option value="co">Colombia</option>
+                        <option value="cl">Chile</option>
+                        <option value="pe">Perú</option>
+                        <option value="ve">Venezuela</option>
+                        <option value="otros">Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- RFC/NIF -->
+            <div class="form-group">
+                <label for="rfc">RFC / NIF</label>
+                <input 
+                    type="text" 
+                    id="rfc" 
+                    name="rfc" 
+                    placeholder="Ej: ABC123456XYZ" 
+                    required
+                >
+            </div>
+
+            <!-- Categoría de Productos -->
+            <div class="form-group">
+                <label for="categoria">Categoría de Productos</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="">Selecciona una categoría</option>
+                    <option value="electronica">Electrónica</option>
+                    <option value="hardware">Hardware</option>
+                    <option value="software">Software</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="otros">Otros</option>
+                </select>
+            </div>
+
+            <!-- Descripción de Productos/Servicios -->
+            <div class="form-group">
+                <label for="descripcion">Descripción de Productos/Servicios</label>
+                <textarea 
+                    id="descripcion" 
+                    name="descripcion" 
+                    placeholder="Describe los productos o servicios que ofrece..." 
+                    required
+                ></textarea>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Registrar Proveedor</button>
+                <button type="reset" class="btn btn-secondary">Limpiar Formulario</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('proveedorForm');
+        const alertSuccess = document.getElementById('alertSuccess');
+        const alertError = document.getElementById('alertError');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Validar que todos los campos estén llenos
+            const formData = new FormData(form);
+            let camposValidos = true;
+
+            for (let [key, value] of formData.entries()) {
+                if (!value.trim()) {
+                    camposValidos = false;
+                    break;
+                }
+            }
+
+            if (!camposValidos) {
+                alertError.classList.add('show');
+                alertSuccess.classList.remove('show');
+                setTimeout(() => {
+                    alertError.classList.remove('show');
+                }, 4000);
+                return;
+            }
+
+            // Crear objeto con los datos
+            const proveedor = {
+                nombre: document.getElementById('nombre').value,
+                contacto: document.getElementById('contacto').value,
+                telefono: document.getElementById('telefono').value,
+                email: document.getElementById('email').value,
+                direccion: document.getElementById('direccion').value,
+                ciudad: document.getElementById('ciudad').value,
+                pais: document.getElementById('pais').value,
+                rfc: document.getElementById('rfc').value,
+                categoria: document.getElementById('categoria').value,
+                descripcion: document.getElementById('descripcion').value,
+                fechaRegistro: new Date().toLocaleDateString('es-ES')
+            };
+
+            // Guardar en localStorage (simulando base de datos)
+            let proveedores = JSON.parse(localStorage.getItem('proveedores')) || [];
+            proveedores.push(proveedor);
+            localStorage.setItem('proveedores', JSON.stringify(proveedores));
+
+            // Mostrar mensaje de éxito
+            alertSuccess.classList.add('show');
+            alertError.classList.remove('show');
+
+            // Limpiar formulario
+            form.reset();
+
+            // Ocultar mensaje después de 3 segundos
+            setTimeout(() => {
+                alertSuccess.classList.remove('show');
+            }, 3000);
+
+            console.log('Proveedor registrado:', proveedor);
+        });
+
+        // Mostrar datos almacenados en consola
+        console.log('Proveedores registrados:', JSON.parse(localStorage.getItem('proveedores')) || []);
+    </script>
+</body>
+</html>
