@@ -1,8 +1,128 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    // Lista de productos definida localmente
+    var productos = new[] {
+        new { Nombre = "Monitor Gamer 4K", Precio = 549.00, Desc = "144Hz, HDR10 y panel IPS profesional.", Imagen = "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400" },
+        new { Nombre = "Teclado Mecánico RGB", Precio = 129.50, Desc = "Switches Blue y retroiluminación personalizada.", Imagen = "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400" },
+        new { Nombre = "Cámara Mirrorless v2", Precio = 1200.00, Desc = "Sensor Full Frame y video en 4K/60fps.", Imagen = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+        new { Nombre = "Smartwatch Pro Max", Precio = 299.00, Desc = "Sensor de oxígeno y batería de 5 días.", Imagen = "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" }
+    };
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    /* Paleta de colores Premium */
+    :root {
+        --accent-color: #2563eb; /* Azul intenso */
+        --text-main: #1e293b;
+        --card-bg: #ffffff;
+    }
+
+    .main-title {
+        font-size: 2.8rem;
+        letter-spacing: -1.5px;
+        color: var(--text-main);
+    }
+
+    .highlight-text {
+        color: var(--accent-color);
+        position: relative;
+        display: inline-block;
+    }
+
+    .product-card-custom {
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: var(--card-bg);
+    }
+
+        .product-card-custom:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-color);
+        }
+
+    .img-box {
+        background: #f1f5f9;
+        border-radius: 20px;
+        margin: 15px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+        .img-box img {
+            max-width: 85%;
+            transition: transform 0.5s;
+        }
+
+    .product-card-custom:hover .img-box img {
+        transform: rotate(3deg) scale(1.1);
+    }
+
+    .price-style {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .btn-buy-now {
+        background: var(--text-main);
+        color: white;
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: 600;
+        border: none;
+        transition: 0.3s;
+    }
+
+        .btn-buy-now:hover {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+</style>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="main-title fw-bold">
+            Productos electrónicos <span class="highlight-text">de calidad</span>
+        </h1>
+        <p class="lead text-secondary mt-2">Tecnología de vanguardia para tu día a día</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        @foreach (var p in productos)
+        {
+            <div class="col">
+                <div class="card h-100 product-card-custom shadow-sm">
+                    <div class="img-box">
+                        <img src="@p.Imagen" alt="@p.Nombre">
+                    </div>
+                    <div class="card-body pt-0 d-flex flex-column">
+                        <h5 class="fw-bold mb-1">@p.Nombre</h5>
+                        <p class="text-muted small mb-4">@p.Desc</p>
+
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-style">$@p.Precio.ToString("N2")</span>
+                                <i class="bi bi-cpu text-primary"></i>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-buy-now">
+                                    Lo quiero
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
