@@ -1,0 +1,145 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Reporte";
+
+    // ===== LISTA EN MEMORIA =====
+    var productos = new List<dynamic>()
+    {
+        new { Nombre="Teclado", Categoria="Hardware", Salidas=120, Descripcion="Periférico de escritura" },
+        new { Nombre="Mouse", Categoria="Hardware", Salidas=150, Descripcion="Dispositivo apuntador" },
+        new { Nombre="Monitor", Categoria="Hardware", Salidas=80, Descripcion="Pantalla de visualización" },
+        new { Nombre="Windows 11", Categoria="Software", Salidas=200, Descripcion="Sistema operativo" },
+        new { Nombre="Office 365", Categoria="Software", Salidas=170, Descripcion="Herramientas de oficina" }
+    };
+
+    string filtro = Context.Request.Query["categoria"];
+    if (!string.IsNullOrEmpty(filtro) && filtro != "Todas")
+    {
+        productos = productos.Where(p => p.Categoria == filtro).ToList();
+    }
+}
+
+<div class="container mt-4">
+
+    <div class="bg-primary text-white p-3 rounded">
+        <h3>Reporte de Categorías y Ventas de Productos</h3>
+    </div>
+
+    <!-- FILTRAR -->
+    <div class="card p-3 mb-3">
+        <form method="get">
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label>Filtrar por Categoría</label>
+                    <select name="categoria" class="form-select">
+                        <option>Todas</option>
+                        <option>Hardware</option>
+                        <option>Software</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-success w-100">
+                        FILTRAR
+                    </button>
+                </div>
+
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="button"
+                            class="btn btn-primary w-100"
+                            onclick="mostrarFormulario()">
+                        + NUEVO PRODUCTO
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+    <!-- FORMULARIO AGREGAR PRODUCTO -->
+    <div id="formulario" class="card p-3 mb-3" style="display:none;">
+        <h5>Agregar Producto</h5>
+
+        <input id="nombre" class="form-control mb-2" placeholder="Nombre" />
+
+        <select id="categoria" class="form-select mb-2">
+            <option>Hardware</option>
+            <option>Software</option>
+        </select>
+
+        <input id="salidas" class="form-control mb-2" placeholder="Salidas" />
+
+        <textarea id="descripcion" class="form-control mb-2"
+                  placeholder="Descripción"></textarea>
+
+        <button class="btn btn-success" onclick="agregarProducto()">
+            Guardar
+        </button>
+    </div>
+
+    <!-- TABLA -->
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Salidas</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody id="tablaProductos">
+
+            @{
+                int r = 1;
+                foreach (var p in productos)
+                {
+                    <tr>
+                        <td>@r</td>
+                        <td>@p.Nombre</td>
+                        <td>@p.Categoria</td>
+                        <td>@p.Salidas</td>
+                        <td>@p.Descripcion</td>
+                    </tr>
+                    r++;
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    function mostrarFormulario() {
+        document.getElementById("formulario").style.display = "block";
+    }
+
+    function agregarProducto() {
+
+        let nombre = document.getElementById("nombre").value;
+        let categoria = document.getElementById("categoria").value;
+        let salidas = document.getElementById("salidas").value;
+        let descripcion = document.getElementById("descripcion").value;
+
+        let tabla = document.getElementById("tablaProductos");
+
+        let fila = `
+            <tr>
+                <td>*</td>
+                <td>${nombre}</td>
+                <td>${categoria}</td>
+                <td>${salidas}</td>
+                <td>${descripcion}</td>
+            </tr>`;
+
+        tabla.innerHTML += fila;
+    }
+</script>
